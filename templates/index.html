@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SoilSense AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f9f4;
+        }
+        h1 {
+            color: #2b7a0b;
+        }
+        form {
+            max-width: 400px;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2b7a0b;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #256704;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            z-index: 1;
+            padding-top: 150px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close:hover {
+            color: black;
+            cursor: pointer;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌿 SoilSense AI</h1>
+
+    <form method="POST">
+        <label>Temperature (°C):</label>
+        <input type="number" name="temperature" step="0.1" required>
+
+        <label>Humidity (%):</label>
+        <input type="number" name="humidity" step="0.1" required>
+
+        <label>Moisture (%):</label>
+        <input type="number" name="moisture" step="0.1" required>
+
+        <label>Soil Type:</label>
+        <select name="soil_type" required>
+            <option value="Sandy">Sandy</option>
+            <option value="Loamy">Loamy</option>
+            <option value="Black">Black</option>
+        </select>
+
+        <label>Nitrogen:</label>
+        <input type="number" name="nitrogen" required>
+
+        <label>Potassium:</label>
+        <input type="number" name="potassium" required>
+
+        <label>Phosphorous:</label>
+        <input type="number" name="phosphorous" required>
+
+        <button type="submit">Analyze Soil</button>
+    </form>
+
+    <div id="resultModal" class="modal" style="display: {{ 'block' if crop_result else 'none' }};">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('resultModal').style.display='none'">&times;</span>
+            {% if crop_result %}
+                <h3>🌾 Recommended Crop: {{ crop_result }}</h3>
+                <ul>
+                    {% for tip in feedback %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
